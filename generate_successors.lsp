@@ -1,6 +1,6 @@
 (defun generate_successors (state color)
 
-	( let ( ( succ '() ) move_position )
+	( let ( ( succ '() ) move_position ( row_position 0 ) )
 
 		( dolist ( row state )
 			
@@ -10,7 +10,7 @@
 
 					( setf move_position ( position col state ) )
 
-					( when ( null ( nth ( - move_position 1 ) state ) )
+					( when ( null ( nth ( - move_position 1 ) row ) )
 
 						;Check if it will flip a tile
 						;Check this by making the play, flipping the tiles,
@@ -18,49 +18,51 @@
 
 					)
 
-					( when ( null ( nth ( + move_position 1 ) state ) )
+					( when ( null ( nth ( + move_position 1 ) row ) )
 
 					
 
 					)
 
-					( when ( null ( nth ( - move_position 8 ) state ) )
+					( when ( null ( nth move_position ( nth row_position state ) ) )
 
 					
 
 					)
 
-					( when ( null ( nth ( + move_position 8 ) state ) )
+					( when ( null ( nth move_position  ( nth row_position state ) ) )
 
 					
 
 					)
 
-					( when ( null ( nth ( + move_position 7 ) state ) )
+					( when ( null ( nth ( - move_position 1 )  ( nth ( + row_position 1 ) state ) ) )
 
 					
 
 					)
 
-					( when ( null ( nth ( + move_position 9 ) state ) )
+					( when ( null ( nth ( + move_position 1 )  ( nth ( + row_position 1 ) state ) ) )
 
 					
 
 					)
 
-					( when ( null ( nth (  move_position 7 ) state ) )
+					( when ( null ( nth ( + move_position 1 )  ( nth ( - row_position 1 ) state ) ) )
 
 					
 
 					)
 
-					( when ( null ( nth ( - move_position 9 ) state ) )
+					( when ( null ( nth ( - move_position 1 )  ( nth ( - row_position 1 ) state ) ) )
 
 					
 
 					)
 
 				)
+
+				( setf row_position ( 1+ row_position ) )
 
 			)
 
