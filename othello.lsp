@@ -10,10 +10,22 @@
 
 (defun prt_brd (board)
     "(prt_brd board) prints the current Othello board"
-    (dolist (row board)
-        (dolist (elem row)
-            (format t "~S " elem)
+
+    (format t " ")
+    (dotimes (i 8)
+       (format t " ~S" (+ 1 i))
+    )
+    (format t "~%")
+
+    (let (rowc)
+        (setf rowc 1)
+        (dolist (row board)
+            (format t "~S " rowc)
+            (dolist (elem row)
+                (format t "~S " elem)
+            )
+            (format t "~%")
+            (incf rowc)
         )
-        (format t "~%")
     )
 )
