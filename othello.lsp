@@ -68,12 +68,12 @@
 
 (defun chk_up (turn row col)
     (let (valid curr_row elem)
-        (dotimes (i (- 8 (- 8 row))) 
+        (dotimes (i (- 7 (- 8 row))) 
             (setf curr_row (nth (- row i) *GAME_BOARD*))
             (setf elem (nth col curr_row))
             (cond 
                 ((equal elem turn) (return-from chk_up valid))
-                ((equal elem '-) NIL)
+                ((equal elem '-) (setf i 8)) ; force a break
                 (t (setf valid t))
             )
         )
@@ -89,7 +89,7 @@
             (setf elem (nth col curr_row))
             (cond 
                 ((equal elem turn) (return-from chk_down valid))
-                ((equal elem '-) NIL)
+                ((equal elem '-) (setf i 8)) ; force a break
                 (t (setf valid t))
             )
         )
@@ -100,19 +100,32 @@
     (let (valid curr_row elem)
         (setf valid NIL)
         (setf curr_row row)
-        (dotimes (i (- 8 row))
+        (dotimes (i (- 8 col))
             (setf curr_row (nth row *GAME_BOARD*))
             (setf elem (nth (+ i col) curr_row))
             (cond 
                 ((equal elem turn) (return-from chk_right valid))
-                ((equal elem '-) NIL)
+                ((equal elem '-) (setf i 8)) ; force a break
                 (t (setf valid t))
             )
         )
     )
 )
 
-;(defun chk_left (turn row col)
+(defun chk_left (turn row col)
+    (let (valid curr_row elem)
+        (dotimes (i (- 8 (- 8 col)))
+            (setf curr_row (nth row *GAME_BOARD*))
+            (setf elem (nth (- col i) curr_row))
+            (cond
+                ((equal elem turn) (return-from chk_left valid))
+                ((equal elem '-) (setf i 8)) ; force a break
+                (t (setf valid t))
+            )
+        )
+    )
+)
+
 
 ;(defun chk_nw (turn row col)
 
