@@ -1,3 +1,5 @@
+(load chk.lsp)
+
 (defvar *GAME_BOARD* '((- - - - - - - -)
                        (- - - - - - - -)
                        (- - - - - - - -)
@@ -34,6 +36,8 @@
 )
 
 (defun move (turn)
+        "(move turn) takes a move for a player (called turn) if their move is
+         valid we change the board and true is returned else we return NIL"
         (prt_brd)
         (format t "Please enter a move (row col): ")
         (let (move)
@@ -47,6 +51,8 @@
 )
 
 (defun check_move (move turn)
+    "(check_move move turn) checks if a move of form (row column) is valid
+     for the specified player called turn, returning true if it is"
     (let (row col valid)
         (setf row (car move))
         (setf col (cadr move))
@@ -56,84 +62,15 @@
             ((chk_up turn row col) (setf valid t))
             ((chk_down turn row col) (setf valid t))
             ((chk_right turn row col) (setf valid t))
-  ;          ((chk_left turn row col) (setf valid t))
-   ;         ((chk_nw turn row col) (setf valid t))
-    ;        ((chk_ne turn row col) (setf valid t))
-     ;       ((chk_se turn row col) (setf valid t))
-      ;      ((chk_sw turn row col) (setf valid t))
+            ((chk_left turn row col) (setf valid t))
+            ((chk_ul turn row col) (setf valid t))
+            ((chk_ur turn row col) (setf valid t))
+            ((chk_dr turn row col) (setf valid t))
+            ((chk_dl turn row col) (setf valid t))
             (t NIL)
         )
     )
 )
-
-(defun chk_up (turn row col)
-    (let (valid curr_row elem)
-        (dotimes (i (- 7 (- 8 row))) 
-            (setf curr_row (nth (- row i) *GAME_BOARD*))
-            (setf elem (nth col curr_row))
-            (cond 
-                ((equal elem turn) (return-from chk_up valid))
-                ((equal elem '-) (setf i 8)) ; force a break
-                (t (setf valid t))
-            )
-        )
-    )
-)
-
-
-(defun chk_down (turn row col)
-    (let (valid curr_row elem)
-        (setf curr_row row)
-        (dotimes (i (- 8 row))
-            (setf curr_row (nth (+ i row) *GAME_BOARD*))
-            (setf elem (nth col curr_row))
-            (cond 
-                ((equal elem turn) (return-from chk_down valid))
-                ((equal elem '-) (setf i 8)) ; force a break
-                (t (setf valid t))
-            )
-        )
-    )
-)
-
-(defun chk_right (turn row col)
-    (let (valid curr_row elem)
-        (setf valid NIL)
-        (setf curr_row row)
-        (dotimes (i (- 8 col))
-            (setf curr_row (nth row *GAME_BOARD*))
-            (setf elem (nth (+ i col) curr_row))
-            (cond 
-                ((equal elem turn) (return-from chk_right valid))
-                ((equal elem '-) (setf i 8)) ; force a break
-                (t (setf valid t))
-            )
-        )
-    )
-)
-
-(defun chk_left (turn row col)
-    (let (valid curr_row elem)
-        (dotimes (i (- 8 (- 8 col)))
-            (setf curr_row (nth row *GAME_BOARD*))
-            (setf elem (nth (- col i) curr_row))
-            (cond
-                ((equal elem turn) (return-from chk_left valid))
-                ((equal elem '-) (setf i 8)) ; force a break
-                (t (setf valid t))
-            )
-        )
-    )
-)
-
-
-;(defun chk_nw (turn row col)
-
-;(defun chk_ne (turn row col)
-
-;(defun chk_se (turn row col)
-
-;(defun chk_sw (turn row col)
 
 (defun prt_brd ()
     "(prt_brd) prints the current Othello board"
@@ -156,4 +93,3 @@
         )
     )
 )
- 
