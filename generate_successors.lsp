@@ -1,6 +1,6 @@
 (defun generate_successors (state color)
 
-	( let ( ( succ '() ) move_position ( row_position 0 ) )
+	( let ( ( succ '() ) move_position match_position ( row_position 0 ) )
 
 		( dolist ( row state )
 			
@@ -8,55 +8,163 @@
 
 				( when ( and ( not ( equal col color ) ) ( not ( null col ) ) )
 
-					( setf move_position ( position col state ) )
+					( setf match_position ( position col state ) )
 
-					( when ( null ( nth ( - move_position 1 ) row ) )
+					( when ( equal ( nth ( - move_position 1 ) row ) color )
 
-						;Check if it will flip a tile
-						;Check this by making the play, flipping the tiles,
-						;and seeing if more than one tile was added to a color
-
-					)
-
-					( when ( null ( nth ( + move_position 1 ) row ) )
-
-					
+						( dotimes ( repeats ( - 8 move_position ) t )
+							( when ( nth ( + match_position repeats ) row )
+								( cons move_position ( + match_position repeats ) )
+								( cons move_position row_position )
+							)
+						)
 
 					)
 
-					( when ( null ( nth move_position ( nth row_position state ) ) )
+					( when ( equal ( nth ( + move_position 1 ) row ) color )
 
-					
-
-					)
-
-					( when ( null ( nth move_position  ( nth row_position state ) ) )
-
-					
-
-					)
-
-					( when ( null ( nth ( - move_position 1 )  ( nth ( + row_position 1 ) state ) ) )
-
-					
+						( dotimes ( repeats ( - 8 move_position ) t )
+							( when ( nth ( - match_position repeats ) row )
+								( cons move_position ( - match_position repeats ) )
+								( cons move_position row_position )
+							)
+						)
 
 					)
 
-					( when ( null ( nth ( + move_position 1 )  ( nth ( + row_position 1 ) state ) ) )
+					( when ( equal ( nth move_position ( nth ( + row_position 1 ) state ) ) color )
 
-					
+						( dotimes ( repeats ( - 8 row_position ) t )
+							( when ( nth move_position ( nth ( - row_position repeats ) state ) )
+								( cons move_position match_position )
+								( cons move_position ( - row_position repeats ) )
+							)
+						)
 
 					)
 
-					( when ( null ( nth ( + move_position 1 )  ( nth ( - row_position 1 ) state ) ) )
+					( when ( equal ( nth move_position  ( nth ( - row_position 1 ) state ) ) color )
 
-					
+						( cond
+
+							( when 
+								( dotimes ( repeats ( - 8 row_position ) t )
+									( when ( nth move_position ( nth ( + row_position repeats ) state ) )
+										( cons move_position match_position )
+										( cons move_position ( + row_position repeats ) )
+									)
+								)
+							)
+
+							(
+								( dotimes ( repeats ( - 8 row_position ) t )
+									( when ( nth move_position ( nth ( + row_position repeats ) state ) )
+										( cons move_position match_position )
+										( cons move_position ( + row_position repeats ) )
+									)
+								)
+							)
+						)
 
 					)
 
-					( when ( null ( nth ( - move_position 1 )  ( nth ( - row_position 1 ) state ) ) )
+					( when ( equal ( nth ( - move_position 1 )  ( nth ( + row_position 1 ) state ) ) color )
 
-					
+						( cond
+
+							( when 
+								( dotimes ( repeats ( - 8 row_position ) t )
+									( when ( nth move_position ( nth ( + row_position repeats ) state ) )
+										( cons move_position match_position )
+										( cons move_position ( + row_position repeats ) )
+									)
+								)
+							)
+
+							(
+								( dotimes ( repeats ( - 8 row_position ) t )
+									( when ( nth move_position ( nth ( + row_position repeats ) state ) )
+										( cons move_position match_position )
+										( cons move_position ( + row_position repeats ) )
+									)
+								)
+							)
+						)
+
+					)
+
+					( when ( equal ( nth ( + move_position 1 )  ( nth ( + row_position 1 ) state ) ) color )
+
+						( cond
+
+							( when 
+								( dotimes ( repeats ( - 8 row_position ) t )
+									( when ( nth move_position ( nth ( + row_position repeats ) state ) )
+										( cons move_position match_position )
+										( cons move_position ( + row_position repeats ) )
+									)
+								)
+							)
+
+							(
+								( dotimes ( repeats ( - 8 row_position ) t )
+									( when ( nth move_position ( nth ( + row_position repeats ) state ) )
+										( cons move_position match_position )
+										( cons move_position ( + row_position repeats ) )
+									)
+								)
+							)
+						)
+
+					)
+
+					( when ( equal ( nth ( + move_position 1 )  ( nth ( - row_position 1 ) state ) ) color )
+
+						( cond
+
+							( when 
+								( dotimes ( repeats ( - 8 row_position ) t )
+									( when ( nth move_position ( nth ( + row_position repeats ) state ) )
+										( cons move_position match_position )
+										( cons move_position ( + row_position repeats ) )
+									)
+								)
+							)
+
+							(
+								( dotimes ( repeats ( - 8 row_position ) t )
+									( when ( nth move_position ( nth ( + row_position repeats ) state ) )
+										( cons move_position match_position )
+										( cons move_position ( + row_position repeats ) )
+									)
+								)
+							)
+						)
+
+					)
+
+					( when ( equal ( nth ( - move_position 1 )  ( nth ( - row_position 1 ) state ) ) color )
+
+						( cond
+
+							( when 
+								( dotimes ( repeats ( - 8 row_position ) t )
+									( when ( nth move_position ( nth ( + row_position repeats ) state ) )
+										( cons move_position match_position )
+										( cons move_position ( + row_position repeats ) )
+									)
+								)
+							)
+
+							(
+								( dotimes ( repeats ( - 8 row_position ) t )
+									( when ( nth move_position ( nth ( + row_position repeats ) state ) )
+										( cons move_position match_position )
+										( cons move_position ( + row_position repeats ) )
+									)
+								)
+							)
+						)
 
 					)
 
