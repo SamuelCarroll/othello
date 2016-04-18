@@ -1,4 +1,4 @@
-(load chk.lsp)
+(load 'chk.lsp)
 
 (defvar *GAME_BOARD* '((- - - - - - - -)
                        (- - - - - - - -)
@@ -35,38 +35,37 @@
     (eval 't)
 )
 
-(defun move (turn)
-        "(move turn) takes a move for a player (called turn) if their move is
-         valid we change the board and true is returned else we return NIL"
+(defun move (player)
+        "(move player) takes a move for a player (called player) if their move is
+         valid we change the board and true is replayered else we replayer NIL"
         (prt_brd)
-        (format t "Please enter a move (row col): ")
-        (let (move)
-           (setf move (read))
+        (format t "Please enter a move [row col]: ")
+        (let (row col)
+           (setf row (read))
+           (setf col (read))
            (cond
-               ((check_move move turn) (make_move (- (car move) 1) 
-                                                  (- (cadr move) 1) turn))
+               ((check_move row col player) (make_move (- row 1) 
+                                                  (- col 1) player))
                (t NIL)
            )
         )
 )
 
-(defun check_move (move turn)
-    "(check_move move turn) checks if a move of form (row column) is valid
-     for the specified player called turn, returning true if it is"
-    (let (row col valid)
-        (setf row (car move))
-        (setf col (cadr move))
+(defun check_move (row col player)
+    "(check_move move player) checks if a move of form (row column) is valid
+     for the specified player, replayering true if it is"
+    (let (valid)
         (decf row)
         (decf col)
         (cond 
-            ((chk_up turn row col) (setf valid t))
-            ((chk_down turn row col) (setf valid t))
-            ((chk_right turn row col) (setf valid t))
-            ((chk_left turn row col) (setf valid t))
-            ((chk_ul turn row col) (setf valid t))
-            ((chk_ur turn row col) (setf valid t))
-            ((chk_dr turn row col) (setf valid t))
-            ((chk_dl turn row col) (setf valid t))
+            ((chk_up player row col) (setf valid t))
+            ((chk_down player row col) (setf valid t))
+            ((chk_right player row col) (setf valid t))
+            ((chk_left player row col) (setf valid t))
+            ((chk_ul player row col) (setf valid t))
+            ((chk_ur player row col) (setf valid t))
+            ((chk_dr player row col) (setf valid t))
+            ((chk_dl player row col) (setf valid t))
             (t NIL)
         )
     )
