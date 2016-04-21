@@ -1,4 +1,5 @@
 (load 'chk.lsp)
+(load 'flip.lsp)
 
 (defvar *GAME_BOARD* '((- - - - - - - -)
                        (- - - - - - - -)
@@ -14,7 +15,7 @@
     "(reset_brd) resets the Othello board"
     (dotimes (i 8)
         (dotimes (j 8)
-            (make_move i j '-)
+            (set_pos i j '-)
         )
     )
 
@@ -24,12 +25,24 @@
     (make_move 4 4 'W)
 )
 
-(defun make_move (row col value)
+(defun set_pos (row col player)
     "(make_move row col value) changes the value at the row and column to the
     value, this function should not be accessible to user"
     (let (curr_row)
         (setf curr_row (nth row *GAME_BOARD*))
-        (setf (nth col curr_row) value)
+        (setf (nth col curr_row) player)
+    )
+
+    (eval 't)
+)
+
+(defun make_move (row col player)
+    "(make_move row col value) changes the value at the row and column to the
+    value, this function should not be accessible to user"
+    (let (curr_row)
+        (setf curr_row (nth row *GAME_BOARD*))
+        (setf (nth col curr_row) player)
+        (if (chk_up player row col) (flip_up player row col))
     )
 
     (eval 't)
