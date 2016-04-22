@@ -1,3 +1,16 @@
+(defun chk_empty (row col)
+    "(chk_empty row col) checks if the move is in an empty space"
+    (let (valid curr_row elem)
+        (setf curr_row (nth row *GAME_BOARD*))
+        (setf elem (nth col curr_row))
+        (cond
+            ((equal elem '-) (setf valid t))
+            (t NIL)
+        )
+    )
+)
+
+
 (defun chk_up (turn row col)
     "(chk_up turn row col) checks if the move is valid going up"
     (let (valid curr_row elem)

@@ -43,6 +43,13 @@
         (setf curr_row (nth row *GAME_BOARD*))
         (setf (nth col curr_row) player)
         (if (chk_up player row col) (flip_up player row col))
+	(if (chk_down player row col) (flip_down player row col))
+        (if (chk_right player row col) (flip_right player row col))
+        (if (chk_left player row col) (flip_left player row col))
+        (if (chk_ul player row col) (flip_ul player row col))
+        (if (chk_ur player row col) (flip_ur player row col))
+        (if (chk_dr player row col) (flip_dr player row col))
+        (if (chk_dl player row col) (flip_dl player row col))
     )
 
     (eval 't)
@@ -70,16 +77,21 @@
     (let (valid)
         (decf row)
         (decf col)
-        (cond 
-            ((chk_up player row col) (setf valid t))
-            ((chk_down player row col) (setf valid t))
-            ((chk_right player row col) (setf valid t))
-            ((chk_left player row col) (setf valid t))
-            ((chk_ul player row col) (setf valid t))
-            ((chk_ur player row col) (setf valid t))
-            ((chk_dr player row col) (setf valid t))
-            ((chk_dl player row col) (setf valid t))
-            (t NIL)
+        (cond
+            ((chk_empty row col)
+                (cond
+                    ((chk_up player row col) (setf valid t))
+                    ((chk_down player row col) (setf valid t))
+                    ((chk_right player row col) (setf valid t))
+                    ((chk_left player row col) (setf valid t))
+                    ((chk_ul player row col) (setf valid t))
+                    ((chk_ur player row col) (setf valid t))
+                    ((chk_dr player row col) (setf valid t))
+                    ((chk_dl player row col) (setf valid t))
+                    (t NIL)
+                )
+            ); don't check if we don't place a piece on a non-empty position
+            (t NIL) ; if everything else fails return false
         )
     )
 )
@@ -104,4 +116,8 @@
             (incf rowc)
         )
     )
+)
+
+(defun othello ( )
+    ; we should get the player's color then start rotating till board full
 )
