@@ -1,4 +1,4 @@
-(defun heuristic ( state player )
+(defun heuristic ( state player not_player )
 	( let ( value )
 
 		( when ( equal ( nth 1 ( nth 1 state ) ) '- )
@@ -48,6 +48,8 @@
 				( seft value ( + value 50 ) )
 			)
 		)
+
+		( setf value ( - value ( - ( length generate_successors player ) ( length generate_successors not_player ) ) ) )
 
 	)
 )

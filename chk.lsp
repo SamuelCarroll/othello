@@ -10,6 +10,30 @@
     )
 )
 
+(defun check_move (row col player)
+    "(check_move move player) checks if a move of form (row column) is valid
+     for the specified player, replayering true if it is"
+    (let (valid)
+        (decf row)
+        (decf col)
+        (cond
+            ((chk_empty row col)
+                (cond
+                    ((chk_up player row col) (setf valid t))
+                    ((chk_down player row col) (setf valid t))
+                    ((chk_right player row col) (setf valid t))
+                    ((chk_left player row col) (setf valid t))
+                    ((chk_ul player row col) (setf valid t))
+                    ((chk_ur player row col) (setf valid t))
+                    ((chk_dr player row col) (setf valid t))
+                    ((chk_dl player row col) (setf valid t))
+                    (t NIL)
+                )
+            ); don't check if we don't place a piece on a non-empty position
+            (t NIL) ; if everything else fails return false
+        )
+    )
+)
 
 (defun chk_up (turn row col)
     "(chk_up turn row col) checks if the move is valid going up"
