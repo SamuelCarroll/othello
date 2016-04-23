@@ -41,7 +41,7 @@ Functions called:
         (let
             (
                 ; generate list of sucessor positions
-                (successors (move-generator position))
+                (successors (generate_successors position))
 
                 ; initialize current best path to nil
                 (best-path nil)

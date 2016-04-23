@@ -1,5 +1,8 @@
 (load 'chk.lsp)
 (load 'flip.lsp)
+(load 'generate_successors.lsp)
+(load 'minimax.lsp)
+(load 'heuristic.lsp)
 
 (defvar *GAME_BOARD* '((- - - - - - - -)
                        (- - - - - - - -)
