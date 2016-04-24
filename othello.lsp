@@ -138,7 +138,7 @@
     (let ((count 0) index)
         (dotimes (i 8)
             (dotimes (j 8)
-                (setf index (+ (i * 8) j))
+                (setf index (+ (* i 8) j))
                 (when (equal color (nth index *GAME_BOARD*)) (incf count))
             )
         )

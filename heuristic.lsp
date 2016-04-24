@@ -1,3 +1,5 @@
+(load 'generate_successors.lsp)
+
 (defun heuristic ( state player )
 	( let ( 
 		( value 0 ) 
@@ -15,8 +17,8 @@
 				 120 -20 20  5  5 20 -20 120 )
 		) )
 		;Sets what the other player is to compare state values
-		( when ( equal player 'B ) ( seft not_player 'W ) )
-		( when ( equal player 'W ) ( seft not_player 'B ) )
+		( when ( equal player 'B ) ( setf not_player 'W ) )
+		( when ( equal player 'W ) ( setf not_player 'B ) )
 
 		;Checks corner count for each player and factors it into value
 		( when ( equal ( nth 0 state ) player )
@@ -55,8 +57,8 @@
 		
 
 		;checks the mobility for each player (number of posible moves) and factors it into value
-		( setf max_val ( + ( length generate_successors player ) .0000000000000001 ) )
-		( setf min_val ( length generate_successors not_player ) )
+		( setf max_val ( + ( length (generate_successors state player) ) .0000000000000001 ) )
+		( setf min_val ( length (generate_successors state not_player) ) )
 		( setf value ( + value ( * 100 ( / ( - max_val min_val ) ( + max_val min_val ) ) ) ) )
 
 		;checks coin parity and factors it into value
@@ -67,7 +69,7 @@
 		;checks stability of each player's pieces and factors it into value
 		( setf max_val 0 )
 		( setf min_val 0 )
-		( dolist ( place state result )
+		( dolist ( place state )
 			( when ( equal place player )
 				( setf max_val ( + max_val ( nth position_stability weight_list ) ) )
 			)
