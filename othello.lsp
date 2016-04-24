@@ -4,14 +4,14 @@
 (load 'minimax.lsp)
 (load 'heuristic.lsp)
 
-(defvar *GAME_BOARD* '((- - - - - - - -)
-                       (- - - - - - - -)
-                       (- - - - - - - -)
-                       (- - - W B - - -)
-                       (- - - B W - - -)
-                       (- - - - - - - -)
-                       (- - - - - - - -)
-                       (- - - - - - - -))
+(defvar *GAME_BOARD* '(- - - - - - - -
+                       - - - - - - - -
+                       - - - - - - - -
+                       - - - W B - - -
+                       - - - B W - - -
+                       - - - - - - - -
+                       - - - - - - - -
+                       - - - - - - - -)
 )
 
 (defun reset_brd ()
@@ -53,16 +53,16 @@
 
 (defun set_brd (position temp_brd)
     "Sets our global game board equal to the position passed in make_move"
-    (let (next_elem curr_row temp_row)
-        (setf next_elem position)
-        (dotimes (i 8)
-            (dotimes (j 8)
-                (append temp_row 
-                (setf next_elem (cdr next_elem))
-            )
-        )
-        (format t "~S~%" (eval temp_brd))
-    )
+;    (let (next_elem curr_row temp_row)
+ ;       (setf next_elem position)
+  ;      (dotimes (i 8)
+   ;         (dotimes (j 8)
+    ;            (append temp_row 
+     ;           (setf next_elem (cdr next_elem))
+      ;      )
+       ; )
+        ;(format t "~S~%" (eval temp_brd))
+    ;)
 )
 
 (defun place_piece (row col player)
@@ -71,14 +71,14 @@
     (let (curr_row)
         (setf curr_row (nth row *GAME_BOARD*))
         (setf (nth col curr_row) player)
-        (if (chk_up player row col) (flip_up player row col))
-	(if (chk_down player row col) (flip_down player row col))
-        (if (chk_right player row col) (flip_right player row col))
-        (if (chk_left player row col) (flip_left player row col))
-        (if (chk_ul player row col) (flip_ul player row col))
-        (if (chk_ur player row col) (flip_ur player row col))
-        (if (chk_dr player row col) (flip_dr player row col))
-        (if (chk_dl player row col) (flip_dl player row col))
+;        (if (chk_up player row col) (flip_up player row col))
+ ;	(if (chk_down player row col) (flip_down player row col))
+  ;       (if (chk_right player row col) (flip_right player row col))
+   ;      (if (chk_left player row col) (flip_left player row col))
+    ;     (if (chk_ul player row col) (flip_ul player row col))
+     ;    (if (chk_ur player row col) (flip_ur player row col))
+      ;   (if (chk_dr player row col) (flip_dr player row col))
+       ;  (if (chk_dl player row col) (flip_dl player row col))
     )
 
     (eval 't)
@@ -108,12 +108,13 @@
     )
     (format t "~%")
 
-    (let (rowc)
+    (let (rowc index)
         (setf rowc 1)
-        (dolist (row board)
+        (dotimes (row 8)
             (format t "~S " rowc)
-            (dolist (elem row)
-                (format t "~S " elem)
+            (dotimes (col 8)
+                (setf index (+ (* row 8) col))
+                (format t "~S " (nth index board))
             )
             (format t "~%")
             (incf rowc)
