@@ -31,9 +31,9 @@
 (defun set_pos (row col player)
     "(make_move row col value) changes the value at the row and column to the
     value, this function should not be accessible to user"
-    (let (curr_row)
-        (setf curr_row (nth row *GAME_BOARD*))
-        (setf (nth col curr_row) player)
+    (let (index)
+        (setf index (+ (* row 8) col))
+        (setf (nth index *GAME_BOARD*) player)
     )
 
     (eval 't)
@@ -44,41 +44,31 @@
      player, also used in Comp V Comp takes current board position, the color
      to place and the number of levels to go down"
      
-    (let (temp_brd)
-        (format t "Trying to print~%")
-        (prt_brd temp_brd)
+    (let ()
     )
      
 )
 
-(defun set_brd (position temp_brd)
-    "Sets our global game board equal to the position passed in make_move"
-;    (let (next_elem curr_row temp_row)
- ;       (setf next_elem position)
-  ;      (dotimes (i 8)
-   ;         (dotimes (j 8)
-    ;            (append temp_row 
-     ;           (setf next_elem (cdr next_elem))
-      ;      )
-       ; )
-        ;(format t "~S~%" (eval temp_brd))
-    ;)
+(defun set_brd (position)
+    "(set_brd position) sets our global game board to the position passed into
+     make_move"
+
 )
 
 (defun place_piece (row col player)
     "(place_piece row col value) changes the value at the row and column to the
     value, this function should not be accessible to user"
-    (let (curr_row)
-        (setf curr_row (nth row *GAME_BOARD*))
-        (setf (nth col curr_row) player)
-;        (if (chk_up player row col) (flip_up player row col))
- ;	(if (chk_down player row col) (flip_down player row col))
-  ;       (if (chk_right player row col) (flip_right player row col))
-   ;      (if (chk_left player row col) (flip_left player row col))
-    ;     (if (chk_ul player row col) (flip_ul player row col))
-     ;    (if (chk_ur player row col) (flip_ur player row col))
-      ;   (if (chk_dr player row col) (flip_dr player row col))
-       ;  (if (chk_dl player row col) (flip_dl player row col))
+    (let (index)
+        (setf index (+ (* row 8) col))
+        (setf (nth index *GAME_BOARD*) player)
+;         (when (chk_up player row col) (flip_up player row col))
+ ;        (when (chk_down player row col) (flip_down player row col))
+  ;       (when (chk_right player row col) (flip_right player row col))
+   ;      (when (chk_left player row col) (flip_left player row col))
+    ;     (when (chk_ul player row col) (flip_ul player row col))
+     ;    (when (chk_ur player row col) (flip_ur player row col))
+      ;   (when (chk_dr player row col) (flip_dr player row col))
+       ;  (when (chk_dl player row col) (flip_dl player row col))
     )
 
     (eval 't)
@@ -125,11 +115,11 @@
 (defun count_pieces (color)
     "(count_pieces color) will count the colored pieces on the board at end"
 
-    (let ((count 0) curr_row)
+    (let ((count 0) index)
         (dotimes (i 8)
-            (setf curr_row (nth i *GAME_BOARD*))
             (dotimes (j 8)
-                (when (equal color (nth j curr_row)) (incf count))
+                (setf index (+ (i * 8) j))
+                (when (equal color (nth index *GAME_BOARD*)) (incf count))
             )
         )
         (eval count) ; return the count
