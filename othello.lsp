@@ -61,14 +61,17 @@
     (let (index)
         (setf index (+ (* row 8) col))
         (setf (nth index *GAME_BOARD*) player)
-         (when (chk_up player row col) (flip_up player row col))
-         (when (chk_down player row col) (flip_down player row col))
-         (when (chk_right player row col) (flip_right player row col))
-         (when (chk_left player row col) (flip_left player row col))
-         (when (chk_ul player row col) (flip_ul player row col))
-         (when (chk_ur player row col) (flip_ur player row col))
-         (when (chk_dr player row col) (flip_dr player row col))
-         (when (chk_dl player row col) (flip_dl player row col))
+         (when (chk_up *GAME_BOARD* player row col) (flip_up player row col))
+         (when (chk_down *GAME_BOARD* player row col)
+             (flip_down player row col)) ; continuation of chk_down when
+         (when (chk_right *GAME_BOARD* player row col)
+             (flip_right player row col)) ; continuation of chk_right when
+         (when (chk_left *GAME_BOARD* player row col)
+             (flip_left player row col)) ; continuation of chk_left when
+         (when (chk_ul *GAME_BOARD* player row col) (flip_ul player row col))
+         (when (chk_ur *GAME_BOARD* player row col) (flip_ur player row col))
+         (when (chk_dr *GAME_BOARD* player row col) (flip_dr player row col))
+         (when (chk_dl *GAME_BOARD* player row col) (flip_dl player row col))
     )
 
     (eval 't)
@@ -82,8 +85,9 @@
            (setf row (read))
            (setf col (read))
            (cond
-               ((check_move row col player) (place_piece (- row 1) 
-                                                  (- col 1) player))
+               ((check_move *GAME_BOARD* row col player) 
+                            (place_piece (- row 1) (- col 1) player)
+               )
                (t NIL)
            )
         )
