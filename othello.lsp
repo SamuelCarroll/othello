@@ -45,6 +45,7 @@
      to place and the number of levels to go down"
      
     (let ()
+        ( place_piece ( car ( cdr ( minimax *GAME_BOARD* ply player ) ) ) )
     )
      
 )
