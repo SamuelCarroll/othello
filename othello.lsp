@@ -45,6 +45,7 @@
      to place and the number of levels to go down"
      
     (let ()
+        ( minimax *GAME_BOARD* 0 ply player )
     )
      
 )

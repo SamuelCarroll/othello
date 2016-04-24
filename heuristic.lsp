@@ -1,6 +1,6 @@
 (defun heuristic ( state player not_player )
 	( let ( value )
-
+		;Checks 4 corners and gives those moves high priority
 		( when ( equal ( nth 1 ( nth 1 state ) ) '- )
 			( when ( equal ( nth 2 ( nth 1 state ) ) player )
 				( seft value ( + value 50 ) )
@@ -48,7 +48,7 @@
 				( seft value ( + value 50 ) )
 			)
 		)
-
+		;checks the mobility for each player (number of posible moves) and compares them
 		( setf value ( - value ( - ( length generate_successors player ) ( length generate_successors not_player ) ) ) )
 
 	)
