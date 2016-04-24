@@ -21,13 +21,13 @@
             ((chk_empty row col)
                 (cond
                     ((chk_up player row col) (setf valid t))
-;                    ((chk_down player row col) (setf valid t))
- ;                   ((chk_right player row col) (setf valid t))
-  ;                  ((chk_left player row col) (setf valid t))
-   ;                 ((chk_ul player row col) (setf valid t))
-    ;                ((chk_ur player row col) (setf valid t))
-     ;               ((chk_dr player row col) (setf valid t))
-      ;              ((chk_dl player row col) (setf valid t))
+                    ((chk_down player row col) (setf valid t))
+                    ((chk_right player row col) (setf valid t))
+                    ((chk_left player row col) (setf valid t))
+                    ((chk_ul player row col) (setf valid t))
+                    ((chk_ur player row col) (setf valid t))
+                    ((chk_dr player row col) (setf valid t))
+                    ((chk_dl player row col) (setf valid t))
                     (t NIL)
                 )
             ); don't check if we don't place a piece on a non-empty position
@@ -50,7 +50,6 @@
             (setf index (- index 8))
         )
     )
-NIL
 )
 
 (defun chk_down (player row col)
@@ -138,7 +137,6 @@ NIL
         (setf index (+ (* (- row 1) 8) (+ col 1)))
         (dotimes (i limit)
             (setf elem (nth index *GAME_BOARD*))
-            (format t "elem = ~S~%" elem)
             (cond
                 ((equal elem player) (return-from chk_ur valid))
                 ((equal elem '-) (setf i 8)) ; force a break
@@ -151,7 +149,7 @@ NIL
 
 (defun chk_dr (player row col)
     "(chk_dr player row col) checks if the move is valid going down and right"
-    (let (valid curr_row elem below right limit)
+    (let (valid index elem below right limit)
         (setf below (- 7 row))
         (setf right (- 7 col))
         (cond
@@ -159,21 +157,22 @@ NIL
             ((< right below) (setf limit right))
             (t (setf limit right))
         )
+        (setf index (+ (* (+ row 1) 8) (+ col 1)))
         (dotimes (i limit)
-            (setf curr_row (nth (+ row (+ 1 i)) *GAME_BOARD*))
-            (setf elem (nth (+ col (+ 1 i)) curr_row))
+            (setf elem (nth index *GAME_BOARD*))
             (cond
                 ((equal elem player) (return-from chk_dr valid))
                 ((equal elem '-) (setf i 8)) ; force a break
                 (t (setf valid t))
             )
+            (setf index (+ index 9))
         )
     )
 )
 
 (defun chk_dl (player row col)
     "(chk_dl player row col) checks if the move is valid going down and left"
-    (let (valid curr_row elem below left limit)
+    (let (valid index elem below left limit)
         (setf below (- 7 row))
         (setf left (- 8 (- 8 col)))
         (cond
@@ -181,14 +180,15 @@ NIL
             ((< left below) (setf limit left))
             (t (setf limit left))
         )
+        (setf index (+ (* (+ row 1) 8) (- col 1)))
         (dotimes (i limit)
-            (setf curr_row (nth (+ row (+ 1 i)) *GAME_BOARD*))
-            (setf elem (nth (- col (+ 1 i)) curr_row))
+            (setf elem (nth index *GAME_BOARD*))
             (cond
                 ((equal elem player) (return-from chk_dl valid))
                 ((equal elem '-) (setf i 8)) ; force a break
                 (t (setf valid t))
             )
+            (setf index (+ index 7))
         )
     )
 )
