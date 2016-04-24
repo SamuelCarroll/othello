@@ -86,7 +86,7 @@
 
 (defun flip_ur (turn row col)
     "(flip_ur turn row col) flips pieces going up and right"
-    (let (valid curr_row elem above right limit)
+    (let (valid index elem above right limit)
         (setf above (- 8 (- 8 row)))
         (setf right (- 7 col))
         (cond
@@ -94,21 +94,22 @@
             ((< right above) (setf limit right))
             (t (setf limit right))
         )
+        (setf index (+ (* (- row 1) 8) (+ col 1)))
         (dotimes (i limit)
-            (setf curr_row (nth (- row (+ 1 i)) *GAME_BOARD*))
-            (setf elem (nth (+ col (+ 1 i)) curr_row))
+            (setf elem (nth index *GAME_BOARD*))
             (cond
                 ((equal elem turn) (return-from flip_ur valid))
                 ((equal elem '-) (setf i 8)) ; force a break
-                (t (setf (nth (+ col (+ 1 i)) curr_row) turn))
+                (t (setf (nth index *GAME_BOARD*) turn))
             )
+            (setf index (- index 7))
         )
     )
 )
 
 (defun flip_dr (turn row col)
     "(flip_dr turn row col) flips pieces going down and right"
-    (let (valid curr_row elem below right limit)
+    (let (valid index elem below right limit)
         (setf below (- 7 row))
         (setf right (- 7 col))
         (cond
@@ -116,21 +117,22 @@
             ((< right below) (setf limit right))
             (t (setf limit right))
         )
+        (setf index (+ (* (+ row 1) 8) (+ col 1)))
         (dotimes (i limit)
-            (setf curr_row (nth (+ row (+ 1 i)) *GAME_BOARD*))
-            (setf elem (nth (+ col (+ 1 i)) curr_row))
+            (setf elem (nth index *GAME_BOARD*))
             (cond
                 ((equal elem turn) (return-from flip_dr valid))
                 ((equal elem '-) (setf i 8)) ; force a break
-                (t (setf (nth (+ col (+ 1 i)) curr_row) turn))
+                (t (setf (nth index *GAME_BOARD*) turn))
             )
+            (setf index (+ index 9))
         )
     )
 )
 
 (defun flip_dl (turn row col)
     "(flip_dl turn row col) flips pieces going down and left"
-    (let (valid curr_row elem below left limit)
+    (let (valid index elem below left limit)
         (setf below (- 7 row))
         (setf left (- 8 (- 8 col)))
         (cond
@@ -138,14 +140,15 @@
             ((< left below) (setf limit left))
             (t (setf limit left))
         )
+        (setf index (+ (* (+ row 1) 8) (- col 1)))
         (dotimes (i limit)
-            (setf curr_row (nth (+ row (+ 1 i)) *GAME_BOARD*))
-            (setf elem (nth (- col (+ 1 i)) curr_row))
+            (setf elem (nth index *GAME_BOARD*))
             (cond
                 ((equal elem turn) (return-from flip_dl valid))
                 ((equal elem '-) (setf i 8)) ; force a break
-                (t (setf (nth (- col (+ 1 i)) curr_row) turn))
+                (t (setf (nth index *GAME_BOARD*) turn))
             )
+            (setf index (+ index 7))
         )
     )
 )
