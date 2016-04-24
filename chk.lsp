@@ -87,11 +87,10 @@ NIL
 
 (defun chk_left (player row col)
     "(chk_left player row col) checks if the move is valid going left"
-    (let (valid curr_row elem)
+    (let (valid index elem)
         (setf index (+ (* row 8) (- col 1)))
         (dotimes (i (- 8 (- 8 col)))
             (setf elem (nth index *GAME_BOARD*))
-            (format t "elem = ~S~%" elem)
             (cond
                 ((equal elem player) (return-from chk_left valid))
                 ((equal elem '-) (setf i 8)) ; force a break
@@ -104,7 +103,7 @@ NIL
 
 (defun chk_ul (player row col)
     "(chk_ul player row col) checks if the move is valid going up and left"
-    (let (valid curr_row elem above left limit)
+    (let (valid index elem above left limit)
         (setf above (- 8 (- 8 row)))
         (setf left (- 8 (- 8 col)))
         (cond
@@ -112,21 +111,23 @@ NIL
             ((< left above) (setf limit left))
             (t (setf limit left))
         )
+        (setf index (+ (* (- row 1) 8) (- col 1)))
         (dotimes (i limit)
-            (setf curr_row (nth (- row (+ 1 i)) *GAME_BOARD*))
-            (setf elem (nth (- col (+ 1 i)) curr_row))
+            (setf elem (nth index *GAME_BOARD*))
             (cond
                 ((equal elem player) (return-from chk_ul valid))
                 ((equal elem '-) (setf i 8)) ; force a break
                 (t (setf valid t))
             )
+            (setf index (- index 9))
         )
     )
+    
 )
 
 (defun chk_ur (player row col)
     "(chk_ur player row col) checks if the move is valid going up and right"
-    (let (valid curr_row elem above right limit)
+    (let (valid index elem above right limit)
         (setf above (- 8 (- 8 row)))
         (setf right (- 7 col))
         (cond
@@ -134,14 +135,16 @@ NIL
             ((< right above) (setf limit right))
             (t (setf limit right))
         )
+        (setf index (+ (* (- row 1) 8) (+ col 1)))
         (dotimes (i limit)
-            (setf curr_row (nth (- row (+ 1 i)) *GAME_BOARD*))
-            (setf elem (nth (+ col (+ 1 i)) curr_row))
+            (setf elem (nth index *GAME_BOARD*))
+            (format t "elem = ~S~%" elem)
             (cond
                 ((equal elem player) (return-from chk_ur valid))
                 ((equal elem '-) (setf i 8)) ; force a break
                 (t (setf valid t))
             )
+            (setf index (- index 7))
         )
     )
 )
