@@ -38,7 +38,7 @@
 
 (defun chk_up (player row col)
     "(chk_up player row col) checks if the move is valid going up"
-    (let (index elem valid)
+    (let (elem index valid)
         (setf index (+ (* (- row 1) 8) col))
         (dotimes (i (- 8 (- 8 row)))
             (setf elem (nth index *GAME_BOARD*))
