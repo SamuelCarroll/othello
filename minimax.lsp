@@ -64,6 +64,11 @@ Functions called:
                 ; of MAX/MIN player (maximum/minimum value)
                 (setf succ-score (- (car succ-value)))
 
+		        ; uses heuristic to calculate succ-score
+                ( when ( null succ-score )
+			        ( setf succ-score heuristic ( state ) player )
+		        )
+
                 ; update best value and path if a better move is found
                 ; (note that path is being stored in reverse order)
                 (when (> succ-score best-score)
