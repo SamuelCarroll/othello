@@ -35,7 +35,7 @@ Functions called:
     ; if we have searched deep enough, or there are no successors,
     ; return position evaluation and nil for the path
     (if (or (equal depth 0) (null (generate_successors position player)))
-        (list (static position) nil)
+        (list (heuristic position player) nil)
 
         ; otherwise, generate successors and run minimax recursively
         (let
@@ -63,11 +63,6 @@ Functions called:
                 ; change sign every ply to reflect alternating selection
                 ; of MAX/MIN player (maximum/minimum value)
                 (setf succ-score (- (car succ-value)))
-
-		        ; uses heuristic to calculate succ-score
-                ( when ( null succ-score )
-			        ( setf succ-score heuristic ( state ) player )
-		        )
 
                 ; update best value and path if a better move is found
                 ; (note that path is being stored in reverse order)
