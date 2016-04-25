@@ -204,8 +204,12 @@
 
         (cond
             ((> b_score w_score) (format t "Black won! Well played~%"))
+            ((= b_score w_score) (format t "Tie Game! Well played~%"))
             (t (format t "White won! Well played!~%"))
         )
+
+        (format t "White score = ~S~%" w_score)
+        (format t "Black score = ~S~%" b_score)
 
         ;prompt for play again
     ); end let
