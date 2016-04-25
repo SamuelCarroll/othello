@@ -111,6 +111,8 @@
             (t NIL)
         )
         (prt_brd *GAME_BOARD*)
+
+        (when (not valid) (format t "Invalid move try again~%"))
         (eval valid) ; make loop based on valid
     )
 )
@@ -170,10 +172,6 @@
                         (setf human 'B)
                         (setf human 'W)
                     )
-                    (format t "y eval to ~S~%" (equalp yes_or_no 'Y))
-                    (format t "n eval to ~S~%" (equalp yes_or_no 'N))
-                    (format t "or eval to ~S~%" (and (not (equalp yes_or_no 'Y))
-                                (not (equalp yes_or_no 'N))))
                 )
             ) ; end the null player cond
                 (t (if (equal player 'black) (setf human 'B) (setf human 'W)))
@@ -184,18 +182,19 @@
 
         (loop while (or (generate_successors *GAME_BOARD* 'B)
                         (generate_successors *GAME_BOARD* 'W)) do
-        (format t "you are ~s~%" human)
             (cond
                 ; loop if an invalid move is made
                 ((equal human 'B)
-                    (when (generate_successors *GAME_BOARD* 'B) (move 'B))
+                    (when (generate_successors *GAME_BOARD* 'B)
+                        (loop while (not (move 'B))))
                     (when (generate_successors *GAME_BOARD* 'W)
                           (make-move *GAME_BOARD* 'W 4))
                 )
                 (t 
                     (when (generate_successors *GAME_BOARD* 'B)
                           (make-move *GAME_BOARD* 'B 4))
-                    (when (generate_successors *GAME_BOARD* 'W) (move 'W))
+                    (when (generate_successors *GAME_BOARD* 'W) 
+                        (loop while (not (move 'W))))
                 )
             )
         );loop till no moves can be generated
