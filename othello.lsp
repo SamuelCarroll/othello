@@ -47,7 +47,9 @@
     (let (my_move)
         ( setf my_move ( caadr ( minimax *GAME_BOARD* ply player ) ) )
         (place_piece (- (car my_move) 1) (- (cadr my_move) 1) player)
-        (eval my_move)
+        (format t "Here is my move: ~S ~S~%~%" (car my_move) (cadr my_move))
+        (prt_brd *GAME_BOARD*)
+        my_move
     )
      
 )
@@ -71,10 +73,10 @@
               (flip_down *GAME_BOARD* player row col)
         )
         (when (chk_right *GAME_BOARD* player row col)
-              (flip_right player row col)
+              (flip_right *GAME_BOARD* player row col)
         )
         (when (chk_left *GAME_BOARD* player row col)
-              (flip_left player row col)
+              (flip_left *GAME_BOARD* player row col)
         )
         (when (chk_ul *GAME_BOARD* player row col)
               (flip_ul *GAME_BOARD* player row col)
@@ -96,7 +98,7 @@
 (defun move (player)
     "(move player) takes a move for a player (called player) if their move is
      valid we change the board and true is replayered else we replayer NIL"
-    (format t "Please enter a move [row col]: ")
+    (format t "What is your move [row col]? ")
     (let (row col valid)
         (setf row (read))
         (setf col (read))
@@ -152,30 +154,47 @@
     "(othello [player]) will prompt player if they want to go first if black or
      white wasn't specified then pits man vs. machine, like John Henry"
     (let (yes_or_no human w_score b_score)
-        ; TODO loop user input while not valid
         (cond
             ((null player)
-                (format t "Would you like to go first [y/n]: ")
-                (setf yes_or_no (read))
-                (if (or (equalp yes_or_no 'Y) (equalp yes_or_no 'YES))
-                    (setf human 'B) ; set human to black if player selects first
-                    (setf human 'W) ; set human to white if player selects not first
+                (loop while (and (not (equalp yes_or_no 'Y))
+                                (not (equalp yes_or_no 'N))) do
+                    (format t "Would you like to go first [y/n]: ")
+                    (setf yes_or_no (read))
+
+                    (when (equalp yes_or_no 'YES) (setf yes_or_no 'Y))
+                    (when (equalp yes_or_no 'NO) (setf yes_or_no 'N))
+
+                    (if (or (equalp yes_or_no 'Y) (equalp yes_or_no 'YES))
+                        ; set player color
+                        (setf human 'B)
+                        (setf human 'W)
+                    )
+                    (format t "y eval to ~S~%" (equalp yes_or_no 'Y))
+                    (format t "n eval to ~S~%" (equalp yes_or_no 'N))
+                    (format t "or eval to ~S~%" (and (not (equalp yes_or_no 'Y))
+                                (not (equalp yes_or_no 'N))))
                 )
-            )
-            (t (if (equal player 'black) (setf human 'B) (setf human 'W)))
-        ) ; get player first preference if color wasn't specified or sets human color
+            ) ; end the null player cond
+                (t (if (equal player 'black) (setf human 'B) (setf human 'W)))
+        ) ; get player first preference if color wasn't specified or sets
+          ; human color
 
-        (prt_brd) ; print the game board for the start 
+        (prt_brd *GAME_BOARD*) ; print the game board for the start 
 
-        (loop while (or (generate_successors 'B) (generate_successors 'W)) do
+        (loop while (or (generate_successors *GAME_BOARD* 'B)
+                        (generate_successors *GAME_BOARD* 'W)) do
+        (format t "you are ~s~%" human)
             (cond
+                ; loop if an invalid move is made
                 ((equal human 'B)
-                    (when (generate_successors 'B) (move 'B))
-                    (when (generate_successors 'W) (make-move *GAME_BOARD* 'W 4))
+                    (when (generate_successors *GAME_BOARD* 'B) (move 'B))
+                    (when (generate_successors *GAME_BOARD* 'W)
+                          (make-move *GAME_BOARD* 'W 4))
                 )
                 (t 
-                    (when (generate_successors 'B) (make-move *GAME_BOARD* 'B 4))
-                    (when (generate_successors 'W) (move 'W))
+                    (when (generate_successors *GAME_BOARD* 'B)
+                          (make-move *GAME_BOARD* 'B 4))
+                    (when (generate_successors *GAME_BOARD* 'W) (move 'W))
                 )
             )
         );loop till no moves can be generated
