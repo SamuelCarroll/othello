@@ -37,7 +37,7 @@
 		    		(when (chk_dl temp_position player row col)
 		    		      (flip_dl temp_position player row col)
 		    		)
-					( setf succ ( cons temp_position succ ) )
+					( setf succ ( cons (list temp_position (list (+ 1 i) (+ 1 j))) succ ) )
 				)
 
 			)
