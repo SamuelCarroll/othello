@@ -58,7 +58,7 @@ Functions called:
             (dolist (successor successors)
 
                 ; perform recursive DFS exploration of game tree
-                (setf succ-value (minimax successor (1- depth) player))
+                (setf succ-value (minimax ( car successor ) (1- depth) player))
 
                 ; change sign every ply to reflect alternating selection
                 ; of MAX/MIN player (maximum/minimum value)
@@ -68,7 +68,7 @@ Functions called:
                 ; (note that path is being stored in reverse order)
                 (when (> succ-score best-score)
                       (setf best-score succ-score)
-                      (setf best-path (cons successor (cdr succ-value)))
+                      (setf best-path (cons ( cadr successor ) (cdr succ-value)))
                 )
             )
 
