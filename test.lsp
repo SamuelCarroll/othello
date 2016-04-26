@@ -1,3 +1,32 @@
+;test multi flip left
+(reset_brd)
+(setf (nth 0 *GAME_BOARD*) 'W)
+(setf (nth 1 *GAME_BOARD*) 'B)
+(setf (nth 2 *GAME_BOARD*) 'B)
+(setf (nth 3 *GAME_BOARD*) 'B)
+(setf (nth 4 *GAME_BOARD*) 'B)
+(setf (nth 5 *GAME_BOARD*) 'B)
+(setf (nth 6 *GAME_BOARD*) 'B)
+(prt_brd *GAME_BOARD*)
+(format t "Please enter 1 8~%")
+(move 'W)
+
+(reset_brd)
+
+;test multi flip right
+(setf (nth 1 *GAME_BOARD*) 'B)
+(setf (nth 2 *GAME_BOARD*) 'B)
+(setf (nth 3 *GAME_BOARD*) 'B)
+(setf (nth 4 *GAME_BOARD*) 'B)
+(setf (nth 5 *GAME_BOARD*) 'B)
+(setf (nth 6 *GAME_BOARD*) 'B)
+(setf (nth 7 *GAME_BOARD*) 'W)
+(prt_brd *GAME_BOARD*)
+(format t "Please enter 1 1~%")
+(move 'W)
+
+(reset_brd)
+
 ;set first row
 (setf (nth 0 *GAME_BOARD*) 'B)
 (setf (nth 1 *GAME_BOARD*) 'B)
@@ -62,5 +91,6 @@
 (setf (nth 54 *GAME_BOARD*) 'B)
 
 ;make move
+(prt_brd *GAME_BOARD*)
 (format t "Please enter 4 4~%")
 (move 'W)
