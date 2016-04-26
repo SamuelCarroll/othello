@@ -30,7 +30,7 @@ Functions called:
           Note: these functions may need additional arguments.
 |#
 
-(defun minimax (position depth player)
+(defun minimax (position depth player Max_or_Min )
 
     ; if we have searched deep enough, or there are no successors,
     ; return position evaluation and nil for the path
@@ -58,7 +58,12 @@ Functions called:
             (dolist (successor successors)
 
                 ; perform recursive DFS exploration of game tree
-                (setf succ-value (minimax ( car successor ) (1- depth) player))
+		( when (
+			( if ( equal Max_or_Min 'Max )
+		       		(setf succ-value (minimax ( car successor ) (1- depth) player 'Min))
+				(setf succ-value (minimax ( car successor ) (1- depth) player 'Max))
+			)
+		)
 
                 ; change sign every ply to reflect alternating selection
                 ; of MAX/MIN player (maximum/minimum value)
