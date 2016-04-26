@@ -48,7 +48,7 @@
 
 (defun flip_left (position player row col)
     "(flip_left player row col) flips pieces going left"
-    (let (valid index elem)
+    (et (valid index elem)
         (setf index (+ (* row 8) (- col 1)))
         (dotimes (i (- 8 (- 8 col)))
             (setf elem (nth index position))
