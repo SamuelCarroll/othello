@@ -58,7 +58,8 @@ Functions called:
             (dolist (successor successors)
 
                 ; perform recursive DFS exploration of game tree
-		( when (
+                ; TODO: we need a check condition in the when statement, currently this will always execute
+		( when (t)
 			( if ( equal Max_or_Min 'Max )
 		       		(setf succ-value (minimax ( car successor ) (1- depth) player 'Min))
 				(setf succ-value (minimax ( car successor ) (1- depth) player 'Max))

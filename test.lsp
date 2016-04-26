@@ -27,6 +27,91 @@
 
 (reset_brd)
 
+;test multi flip down
+(setf (nth 0 *GAME_BOARD*) 'W)
+(setf (nth 8 *GAME_BOARD*) 'B)
+(setf (nth 16 *GAME_BOARD*) 'B)
+(setf (nth 24 *GAME_BOARD*) 'B)
+(setf (nth 32 *GAME_BOARD*) 'B)
+(setf (nth 40 *GAME_BOARD*) 'B)
+(setf (nth 48 *GAME_BOARD*) 'B)
+(prt_brd *GAME_BOARD*)
+(format t "Please enter 8 1~%")
+(move 'W)
+
+(reset_brd)
+
+;test multi flip up
+(setf (nth 8 *GAME_BOARD*) 'B)
+(setf (nth 16 *GAME_BOARD*) 'B)
+(setf (nth 24 *GAME_BOARD*) 'B)
+(setf (nth 32 *GAME_BOARD*) 'B)
+(setf (nth 40 *GAME_BOARD*) 'B)
+(setf (nth 48 *GAME_BOARD*) 'B)
+(setf (nth 56 *GAME_BOARD*) 'W)
+(prt_brd *GAME_BOARD*)
+(format t "Please enter 1 1~%")
+(move 'W)
+
+(reset_brd)
+
+;Test multi up-right
+(setf (nth 14 *GAME_BOARD*) 'B)
+(setf (nth 21 *GAME_BOARD*) 'B)
+(setf (nth 28 *GAME_BOARD*) 'B)
+(setf (nth 35 *GAME_BOARD*) 'B)
+(setf (nth 42 *GAME_BOARD*) 'B)
+(setf (nth 49 *GAME_BOARD*) 'B)
+(setf (nth 56 *GAME_BOARD*) 'W)
+(prt_brd *GAME_BOARD*)
+(format t "Please enter 1 8~%")
+(move 'W)
+
+(reset_brd)
+
+;test multi down-left
+(setf (nth 7 *GAME_BOARD*) 'W)
+(setf (nth 14 *GAME_BOARD*) 'B)
+(setf (nth 21 *GAME_BOARD*) 'B)
+(setf (nth 28 *GAME_BOARD*) 'B)
+(setf (nth 35 *GAME_BOARD*) 'B)
+(setf (nth 42 *GAME_BOARD*) 'B)
+(setf (nth 49 *GAME_BOARD*) 'B)
+(prt_brd *GAME_BOARD*)
+(format t "Please enter 8 1~%")
+(move 'W)
+
+(reset_brd)
+
+;test multi down-right
+(setf (nth 0 *GAME_BOARD*) 'W)
+(setf (nth 9 *GAME_BOARD*) 'B)
+(setf (nth 18 *GAME_BOARD*) 'B)
+(setf (nth 27 *GAME_BOARD*) 'B)
+(setf (nth 36 *GAME_BOARD*) 'B)
+(setf (nth 45 *GAME_BOARD*) 'B)
+(setf (nth 54 *GAME_BOARD*) 'B)
+(prt_brd *GAME_BOARD*)
+(format t "Please enter 8 8~%")
+(move 'W)
+
+(reset_brd)
+
+;teset multi up left
+(setf (nth 9 *GAME_BOARD*) 'B)
+(setf (nth 18 *GAME_BOARD*) 'B)
+(setf (nth 27 *GAME_BOARD*) 'B)
+(setf (nth 36 *GAME_BOARD*) 'B)
+(setf (nth 45 *GAME_BOARD*) 'B)
+(setf (nth 54 *GAME_BOARD*) 'B)
+(setf (nth 63 *GAME_BOARD*) 'W)
+(prt_brd *GAME_BOARD*)
+(format t "Please enter 1 1~%")
+(move 'W)
+
+(reset_brd)
+
+;Test all single flip
 ;set first row
 (setf (nth 0 *GAME_BOARD*) 'B)
 (setf (nth 1 *GAME_BOARD*) 'B)
