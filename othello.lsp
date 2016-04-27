@@ -195,11 +195,11 @@
                     (when (generate_successors *GAME_BOARD* 'B)
                         (loop while (not (move 'B))))
                     (when (generate_successors *GAME_BOARD* 'W)
-                          (make-move *GAME_BOARD* 'W 7))
+                          (make-move *GAME_BOARD* 'W 4))
                 )
                 (t 
                     (when (generate_successors *GAME_BOARD* 'B)
-                          (make-move *GAME_BOARD* 'B 7))
+                          (make-move *GAME_BOARD* 'B 4))
                     (when (generate_successors *GAME_BOARD* 'W) 
                         (loop while (not (move 'W))))
                 )
