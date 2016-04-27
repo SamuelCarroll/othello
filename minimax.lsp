@@ -30,7 +30,7 @@ Functions called:
           Note: these functions may need additional arguments.
 |#
 
-(defun minimax (position depth player Max_or_Min )
+(defun minimax (position depth player Max_or_Min alpha beta )
 
     ; if we have searched deep enough, or there are no successors,
     ; return position evaluation and nil for the path
@@ -52,19 +52,37 @@ Functions called:
                 ; other local variables
                 succ-value
                 succ-score
+                not_player
             )
 
+            (if (equalp player 'B) (setf not_player 'W) (setf not_player 'B))
             ; explore possible moves by looping through successor positions
             (dolist (successor successors)
 
                 ; perform recursive DFS exploration of game tree
                 ; TODO: we need a check condition in the when statement, currently this will always execute
-		( when (t)
-			( if ( equal Max_or_Min 'Max )
-		       		(setf succ-value (minimax ( car successor ) (1- depth) player 'Min))
-				(setf succ-value (minimax ( car successor ) (1- depth) player 'Max))
+		( cond 
+			( ( null succ-value )
+				(setf succ-value (minimax ( car successor ) (1- depth) not_player 'Min alpha beta))
+			)
+			( t
+				( cond  
+					( ( equalp Max_or_Min 'Max )
+						( when ( < alpha beta )
+							(setf succ-value (minimax ( car successor ) (1- depth) not_player 'Min alpha beta))
+							(setf alpha (- (car succ-value)))
+						)
+					)
+					( ( equalp Max_or_Min 'Min )
+						( when ( < beta alpha )
+							( setf succ-value (minimax ( car successor ) (1- depth) not_player 'Max alpha beta))
+							(setf beta (- (car succ-value)))
+						)
+					)
+				)
 			)
 		)
+
 
                 ; change sign every ply to reflect alternating selection
                 ; of MAX/MIN player (maximum/minimum value)

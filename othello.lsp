@@ -44,9 +44,9 @@
      player, also used in Comp V Comp takes current board position, the color
      to place and the number of levels to go down"
      
-    (let (my_move temp_state)
+    (let (my_move temp_state ( alpha -999999 ) ( beta 999999 ) )
 	( setf temp_state ( copy-list *GAME_BOARD* ) )
-        ( setf my_move ( caadr ( minimax temp_state ply player 'Max ) ) )
+        ( setf my_move ( caadr ( minimax temp_state ply player 'Max alpha beta ) ) )
         (place_piece (- (car my_move) 1) (- (cadr my_move) 1) player)
         (format t "Here is my move: ~S ~S~%~%" (car my_move) (cadr my_move))
         (prt_brd *GAME_BOARD*)
