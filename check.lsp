@@ -1,3 +1,15 @@
+#|
+                    ***** Check.lsp *****
+
+Controls the checking of a given move for the game.
+All directions accounted for Up, Down, Left, Right,
+Up-Left, Up-Right, Down-Right, and Down-Left 
+
+Authors: Samuel Carroll
+Written Spring 2016 for CSC447/547 AI class.
+
+|#
+
 (defun chk_empty (row col position)
 	"(chk_empty row col) checks if the move is in an empty space"
 	(let (index elem valid)

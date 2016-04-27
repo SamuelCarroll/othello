@@ -1,3 +1,14 @@
+#|
+                    ***** heuristic.lsp *****
+
+This is the code to check the strength of a play, doesn't seem to work
+great but need to turn this in. 
+
+Authors: Leif Torgersen
+Written Spring 2016 for CSC447/547 AI class.
+
+|#
+
 (load 'generate_successors.lsp)
 
 (defun heuristic (state player)

@@ -1,5 +1,16 @@
+#|
+                    ***** generate_successors.lsp *****
+
+This uses the flip code to generate successors for a given,
+state of the board.
+
+Authors: Leif Torgersen
+Written Spring 2016 for CSC447/547 AI class.
+
+|#
+
 (defun generate_successors ( position player )
-	"(generate_successors player) Creats a list of all legal moves as a
+	"(generate_successors position player) Creats a list of all legal moves as a
 	list of 2 elements, a row position and a column p[osition"
 	( let ( succ row col index temp_position )
 		( dotimes ( i 8 )

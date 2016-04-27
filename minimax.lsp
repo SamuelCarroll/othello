@@ -4,6 +4,7 @@
 Generalized recursive minimax routine.
 
 Author: Dr. John M. Weiss
+Modified by: Leif Torgersen and Samuel Carroll
 Class:	SDSM&T CSC447/547 Artificial Intelligence
 Date: 	Spring 2016
 
@@ -31,7 +32,9 @@ Functions called:
 |#
 
 (defun minimax (position depth player Max_or_Min alpha beta)
-
+	"(minimax position depth player Max_or_Min alpha beta) runs minimax
+	 with Alpha-Beta Pruning to find a move, needs depth to search whos
+	 turn it is if they are Max or Min and the above alpha and beta scores"
 	; if we have searched deep enough, or there are no successors,
 	; return position evaluation and nil for the path
 	(if (or (equal depth 0) (null (generate_successors position player)))
@@ -60,7 +63,7 @@ Functions called:
 			(dolist (successor successors)
 
 				; perform recursive DFS exploration of game tree
-				; TODO: we need a check condition in the when statement, currently this will always execute
+				
 				(cond ((null succ-value)
 					(setf succ-value (minimax (car successor) (1- depth) not_player 'Min alpha beta)))
 					(t

@@ -1,3 +1,15 @@
+#|
+                    ***** othello.lsp *****
+
+Contains the code to play Othello (not to be confused with the Shakespeare
+play of the same name). Does the checks, reinitializes the board and main
+control loop for the program. 
+
+Authors: Samuel Carroll, Leif Torgersen
+Written Spring 2016 for CSC447/547 AI class.
+
+|#
+
 (load 'check.lsp)
 (load 'flip.lsp)
 (load 'generate_successors.lsp)
@@ -12,7 +24,7 @@
 			- - - - - - - -
 			- - - - - - - -
 			- - - - - - - -)
-)
+) ; variable that holds the game board
 
 (defun reset_brd ()
 	"(reset_brd) resets the Othello board"
@@ -45,11 +57,11 @@
 	 to place and the number of levels to go down"
 	
 	(let (my_move temp_state ( alpha -999999 ) ( beta 999999 ) )
-		( setf temp_state ( copy-list *GAME_BOARD* ) )
+		( setf temp_state ( copy-list position ) )
 		( setf my_move ( caadr ( minimax temp_state ply player 'Max alpha beta ) ) )
 		(place_piece (- (car my_move) 1) (- (cadr my_move) 1) player)
 		(format t "Here is my move: ~S ~S~%~%" (car my_move) (cadr my_move))
-		(prt_brd *GAME_BOARD*)
+		(prt_brd position)
 		my_move
 	)
 )
@@ -147,14 +159,14 @@
 )
 
 (defun othello-init ( )
-	"(othello-init) will reset the global game board"
+	"(othello-init) will initialize for new Othello game"
 	(reset_brd)
 )
 
 (defun othello (&optional player)
 	"(othello [player]) will prompt player if they want to go first if black or
 	 white wasn't specified then pits man vs. machine, like John Henry"
-(format t "player = ~S~%" player)
+
 	(let ((again T) yes_or_no human w_score b_score)
 		(loop while again do
 			(cond
@@ -231,4 +243,5 @@
 	); end let
 )
 
+; main function executes if called from command line passing args and stuff
 (if (null *ARGS*) (othello) (othello (intern (string-upcase (car *ARGS*)))))

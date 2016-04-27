@@ -1,3 +1,15 @@
+#|
+                    ***** flip.lsp *****
+
+Controls the flipping of tile pieces on the board.
+All directions accounted for Up, Down, Left, Right,
+Up-Left, Up-Right, Down-Right, and Down-Left 
+
+Authors: Samuel Carroll
+Written Spring 2016 for CSC447/547 AI class.
+
+|#
+
 (defun flip_up (position player row col)
 	"(flip_up player row col) flips pieces going up"
 	(let (valid index elem)
