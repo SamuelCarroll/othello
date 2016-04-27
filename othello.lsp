@@ -154,6 +154,7 @@
 (defun othello (&optional player)
 	"(othello [player]) will prompt player if they want to go first if black or
 	 white wasn't specified then pits man vs. machine, like John Henry"
+(format t "player = ~S~%" player)
 	(let ((again T) yes_or_no human w_score b_score)
 		(loop while again do
 			(cond
@@ -173,7 +174,7 @@
 							)
 					)
 				) ; end the null player cond
-				(t (if (equal player 'black) (setf human 'B) (setf human 'W)))
+				(t (if (equalp player 'black) (setf human 'B) (setf human 'W)))
 			) ; get player first preference if color wasn't specified or sets
 			  ; human color
 
@@ -229,3 +230,5 @@
 		)
 	); end let
 )
+
+(if (null *ARGS*) (othello) (othello (intern (string-upcase (car *ARGS*)))))
