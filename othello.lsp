@@ -153,10 +153,16 @@
     )
 )
 
+(defun othello-init ( )
+    "(othello-init) will reset the global game board"
+    (reset_brd)
+)
+
 (defun othello (&optional player)
     "(othello [player]) will prompt player if they want to go first if black or
      white wasn't specified then pits man vs. machine, like John Henry"
-    (let (yes_or_no human w_score b_score)
+    (let ((again T) yes_or_no human w_score b_score)
+        (loop while again do
         (cond
             ((null player)
                 (loop while (and (not (equalp yes_or_no 'Y))
@@ -178,6 +184,7 @@
         ) ; get player first preference if color wasn't specified or sets
           ; human color
 
+        (othello-init)
         (prt_brd *GAME_BOARD*) ; print the game board for the start 
 
         (loop while (or (generate_successors *GAME_BOARD* 'B)
@@ -188,11 +195,11 @@
                     (when (generate_successors *GAME_BOARD* 'B)
                         (loop while (not (move 'B))))
                     (when (generate_successors *GAME_BOARD* 'W)
-                          (make-move *GAME_BOARD* 'W 4))
+                          (make-move *GAME_BOARD* 'W 7))
                 )
                 (t 
                     (when (generate_successors *GAME_BOARD* 'B)
-                          (make-move *GAME_BOARD* 'B 4))
+                          (make-move *GAME_BOARD* 'B 7))
                     (when (generate_successors *GAME_BOARD* 'W) 
                         (loop while (not (move 'W))))
                 )
@@ -211,6 +218,21 @@
         (format t "White score = ~S~%" w_score)
         (format t "Black score = ~S~%" b_score)
 
-        ;prompt for play again
+        (setf yes_or_no NIL)
+        (loop while (and (not (equalp yes_or_no 'Y))
+                                (not (equalp yes_or_no 'N))) do
+                    (format t "Would you like to play again [y/n]: ")
+                    (setf yes_or_no (read))
+
+                    (when (equalp yes_or_no 'YES) (setf yes_or_no 'Y))
+                    (when (equalp yes_or_no 'NO) (setf yes_or_no 'N))
+
+                    (if (or (equalp yes_or_no 'Y) (equalp yes_or_no 'YES))
+                        ; set player color
+                        (and (setf again t) (setf player NIL))
+                        (setf again NIL)
+                    )
+        );prompt for play again
+        )
     ); end let
 )

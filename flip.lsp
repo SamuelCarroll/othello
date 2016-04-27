@@ -52,7 +52,6 @@
         (setf index (+ (* row 8) (- col 1)))
         (dotimes (i (- 8 (- 8 col)))
             (setf elem (nth index position))
-            (format t "index = ~S elem = ~S~%" index elem)
             (cond
                 ((equal elem player) (return-from flip_left valid))
                 ((equal elem '-) (setf i 8)) ; force a break
