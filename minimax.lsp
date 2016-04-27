@@ -60,18 +60,6 @@ Functions called:
             (dolist (successor successors)
 
                 ; perform recursive DFS exploration of game tree
-		(if (equal 'MAX Max_or_Min)
-                    (setf Max_or_Min 'MIN)
-                    (setf Max_or_Min 'MAX)
-                )
-
-                (if (equal 'b player)  
-                    (setf succ-value (minimax successor (1- depth) 'W Max_or_Min))
-                    (setf succ-value (minimax successor (1- depth) 'B Max_or_Min))
-                )
-
-
-                (setf succ-score (- (car succ-value)))
                 ; TODO: we need a check condition in the when statement, currently this will always execute
 		( cond 
 			( ( null succ-value )

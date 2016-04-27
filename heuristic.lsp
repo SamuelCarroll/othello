@@ -53,7 +53,7 @@
 			( incf min_val )
 		)
 		( setf max_val ( + max_val .0000000000000001 ) )
-		(when (not (equal (+ max_val min_val) 0 ))
+		(when (not (= (+ max_val min_val) 0 ))
 			( setf value ( + value ( * 100 ( / ( - max_val min_val ) ( + max_val min_val ) ) ) ) )
 		)
 		
@@ -61,14 +61,14 @@
 		;checks the mobility for each player (number of posible moves) and factors it into value
 		( setf max_val ( + ( length (generate_successors state player) ) .0000000000000001 ) )
 		( setf min_val ( length (generate_successors state not_player) ) )
-                (when (not (equal (+ max_val min_val) 0 ))
+                (when (not (= (+ max_val min_val) 0 ))
 		    ( setf value ( + value ( * 100 ( / ( - max_val min_val ) ( + max_val min_val ) ) ) ) )
                 )
 
 		;checks coin parity and factors it into value
 		( setf max_val ( + ( count_pieces player ) .0000000000000001 ) )
 		( setf min_val ( count_pieces not_player ) )
-                (when (not (equal (+ max_val min_val) 0 ))
+                (when (not (= (+ max_val min_val) 0 ))
 			( setf value ( + value ( * 100 ( / ( - max_val min_val ) ( + max_val min_val ) ) ) ) )
                 )
 
@@ -85,8 +85,9 @@
 			( incf position_stability )
 		)
                 ( setf max_val ( + ( count_pieces player ) .0000000000000001 ) )
-		( when (not (equal (+ max_val min_val) 0 ))
+		( when (not (= (+ max_val min_val) 0 ))
 		    ( setf value ( + value ( * 100 ( / ( - max_val min_val ) ( + max_val min_val ) ) ) ) )
 		)
+		(eval value)
 	)
 )
