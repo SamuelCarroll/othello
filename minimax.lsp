@@ -30,74 +30,72 @@ Functions called:
           Note: these functions may need additional arguments.
 |#
 
-(defun minimax (position depth player Max_or_Min alpha beta )
+(defun minimax (position depth player Max_or_Min alpha beta)
 
-    ; if we have searched deep enough, or there are no successors,
-    ; return position evaluation and nil for the path
-    (if (or (equal depth 0) (null (generate_successors position player)))
-        (list (heuristic position player) nil)
+	; if we have searched deep enough, or there are no successors,
+	; return position evaluation and nil for the path
+	(if (or (equal depth 0) (null (generate_successors position player)))
+		(list (heuristic position player) nil)
 
-        ; otherwise, generate successors and run minimax recursively
-        (let
-            (
-                ; generate list of sucessor positions
-                (successors (generate_successors position player))
+		; otherwise, generate successors and run minimax recursively
+		(let
+			(
+				; generate list of sucessor positions
+				(successors (generate_successors position player))
 
-                ; initialize current best path to nil
-                (best-path nil)
+				; initialize current best path to nil
+				(best-path nil)
 
-                ; initialize current best score to negative infinity
-                (best-score -1000000)
+				; initialize current best score to negative infinity
+				(best-score -1000000)
 
-                ; other local variables
-                succ-value
-                succ-score
-                not_player
-            )
-
-            (if (equalp player 'B) (setf not_player 'W) (setf not_player 'B))
-            ; explore possible moves by looping through successor positions
-            (dolist (successor successors)
-
-                ; perform recursive DFS exploration of game tree
-                ; TODO: we need a check condition in the when statement, currently this will always execute
-		( cond 
-			( ( null succ-value )
-				(setf succ-value (minimax ( car successor ) (1- depth) not_player 'Min alpha beta))
+				; other local variables
+				succ-value
+				succ-score
+				not_player
 			)
-			( t
-				( cond  
-					( ( equalp Max_or_Min 'Max )
-						( when ( < alpha beta )
-							(setf succ-value (minimax ( car successor ) (1- depth) not_player 'Min alpha beta))
-							(setf alpha (- (car succ-value)))
-						)
-					)
-					( ( equalp Max_or_Min 'Min )
-						( when ( < beta alpha )
-							( setf succ-value (minimax ( car successor ) (1- depth) not_player 'Max alpha beta))
-							(setf beta (- (car succ-value)))
+
+			(if (equalp player 'B) (setf not_player 'W) (setf not_player 'B))
+			; explore possible moves by looping through successor positions
+			(dolist (successor successors)
+
+				; perform recursive DFS exploration of game tree
+				; TODO: we need a check condition in the when statement, currently this will always execute
+				(cond ((null succ-value)
+					(setf succ-value (minimax (car successor) (1- depth) not_player 'Min alpha beta)))
+					(t
+						(cond  
+							((equalp Max_or_Min 'Max)
+								(when (< alpha beta)
+									(setf succ-value (minimax (car successor) (1- depth) not_player 'Min alpha beta))
+									(setf alpha (- (car succ-value)))
+								)
+							)
+							((equalp Max_or_Min 'Min)
+								(when (< beta alpha)
+									(setf succ-value (minimax (car successor) (1- depth) not_player 'Max alpha beta))
+									(setf beta (- (car succ-value)))
+								)
+							)
 						)
 					)
 				)
+
+
+				; change sign every ply to reflect alternating selection
+				; of MAX/MIN player (maximum/minimum value)
+				(setf succ-score (- (car succ-value)))
+
+				; update best value and path if a better move is found
+				; (note that path is being stored in reverse order)
+				(when (> succ-score best-score)
+					(setf best-score succ-score)
+					(setf best-path (cons (cadr successor) (cdr succ-value)))
+				)
 			)
+
+			; return (value path) list when done
+			(list best-score best-path)
 		)
-
-
-                ; change sign every ply to reflect alternating selection
-                ; of MAX/MIN player (maximum/minimum value)
-                (setf succ-score (- (car succ-value)))
-
-                ; update best value and path if a better move is found
-                ; (note that path is being stored in reverse order)
-                (when (> succ-score best-score)
-                      (setf best-score succ-score)
-                      (setf best-path (cons ( cadr successor ) (cdr succ-value)))
-                )
-            )
-
-            ; return (value path) list when done
-            (list best-score best-path)
-        )
-    )
+	)
 )
