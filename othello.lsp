@@ -59,9 +59,11 @@ Written Spring 2016 for CSC447/547 AI class.
 	(let (my_move temp_state ( alpha -999999 ) ( beta 999999 ) )
 		( setf temp_state ( copy-list position ) )
 		( setf my_move ( caadr ( minimax temp_state ply player 'Max alpha beta ) ) )
-		(place_piece (- (car my_move) 1) (- (cadr my_move) 1) player)
-		(format t "Here is my move: ~S ~S~%~%" (car my_move) (cadr my_move))
-		(prt_brd position)
+		(if (not (null my_move))
+			(place_piece (- (car my_move) 1) (- (cadr my_move) 1) player)
+			(setf my_move '( ))
+		)
+
 		my_move
 	)
 )
@@ -163,11 +165,16 @@ Written Spring 2016 for CSC447/547 AI class.
 	(reset_brd)
 )
 
+(defun show_move (my_move position)
+	(format t "Here is my move: ~S ~S~%~%" (car my_move) (cadr my_move))
+	(prt_brd position)
+)
+
 (defun othello (&optional player)
 	"(othello [player]) will prompt player if they want to go first if black or
 	 white wasn't specified then pits man vs. machine, like John Henry"
 
-	(let ((again T) yes_or_no human w_score b_score)
+	(let ((again T) yes_or_no human w_score b_score my_move)
 		(loop while again do
 			(cond
 				((null player)
@@ -201,11 +208,13 @@ Written Spring 2016 for CSC447/547 AI class.
 						(when (generate_successors *GAME_BOARD* 'B)
 						(loop while (not (move 'B))))
 							(when (generate_successors *GAME_BOARD* 'W)
-							      (make-move *GAME_BOARD* 'W 4))
+							      (setf my_move (make-move *GAME_BOARD* 'W 4)))
+						(when (not (equal my_move '( ))) (show_move my_move *GAME_BOARD*))
 					)
 					(t 
 						(when (generate_successors *GAME_BOARD* 'B)
-						      (make-move *GAME_BOARD* 'B 4))
+						      (setf my_move (make-move *GAME_BOARD* 'B 4)))
+						(when (not (equal my_move '( ))) (show_move my_move *GAME_BOARD*))
 						(when (generate_successors *GAME_BOARD* 'W) 
 						(loop while (not (move 'W))))
 					)
